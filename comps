@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# gmail-cmps - by: edu@pepos
+if [[ -n $1 ]]
+then
+	xdotool exec chromium --app="https://mail.google.com/mail/u/0/?tf=cm&to=$*"&>/dev/null
+	window=`xdotool getwindowfocus`
+while [[ $window = `xdotool getwindowfocus` ]]
+do
+	sleep 0
+done
+	x=`xdotool getdisplaygeometry|tr ' ' '\n'|head -1`
+	y=`xdotool getdisplaygeometry|tr ' ' '\n'|tail -1`
+	xdotool getwindowfocus windowsize --sync 600 400 windowmove --sync $((x/2-300)) $((y/2-232))
+else
+	xdotool exec chromium https://mail.google.com/mail/u/0/#inbox&>/dev/null
+fi
